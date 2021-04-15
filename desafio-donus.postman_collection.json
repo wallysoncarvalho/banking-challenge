@@ -84,6 +84,24 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get client information",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/client/97231193072",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"client",
+						"97231193072"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
