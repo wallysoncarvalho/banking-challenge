@@ -43,7 +43,6 @@ public class Transfer {
   }
 
   private boolean isTransferValueValid(TransferData transferData) {
-    return transferData.getValue().compareTo(new BigDecimal("0")) > 0
-        && transferData.getValue().compareTo(new BigDecimal("2000")) <= 0;
+    return transferData.getValue().compareTo(new BigDecimal("0")) > 0;
   }
 }
