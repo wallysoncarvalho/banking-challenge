@@ -14,7 +14,7 @@ public class Deposit {
   }
 
   public void deposit(String clientId, BigDecimal value) {
-    if (value.compareTo(new BigDecimal("0")) <= 0) throw new InvalidDepositValue();
+    if (!isDepositValueValid(value)) throw new InvalidDepositValue();
 
     var client =
         clientRepository
@@ -24,5 +24,9 @@ public class Deposit {
     var newBalance = client.getBalance().add(value);
 
     clientRepository.updateBalance(client.getIdentifier().getId(), newBalance);
+  }
+
+  private boolean isDepositValueValid(BigDecimal value) {
+    return value.compareTo(new BigDecimal("0")) > 0 && value.compareTo(new BigDecimal("2000")) <= 0;
   }
 }

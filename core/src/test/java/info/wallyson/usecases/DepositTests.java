@@ -26,13 +26,22 @@ final class DepositTests extends TestBaseClass {
   }
 
   @Test
-  @DisplayName("Should throw exception to deposit ZERO")
-  void shouldTrowExceptionToDepositZero() {
-    var depositValue = BigDecimal.ZERO;
+  @DisplayName("Should throw exception to deposit zero or less")
+  void shouldTrowExceptionToDepositZeroOrLess() {
     var client = ClientCreator.single();
     var clientId = client.getIdentifier().getId();
 
-    assertThrows(InvalidDepositValue.class, () -> deposit.deposit(clientId, depositValue));
+    assertThrows(InvalidDepositValue.class, () -> deposit.deposit(clientId, BigDecimal.ZERO));
+    assertThrows(InvalidDepositValue.class, () -> deposit.deposit(clientId, new BigDecimal("-5")));
+  }
+
+  @Test
+  @DisplayName("Should throw exception to deposit more than R$2.000,00")
+  void shouldTrowExceptionToDepositMoreThanTwoThousand() {
+    var client = ClientCreator.single();
+    var clientId = client.getIdentifier().getId();
+
+    assertThrows(InvalidDepositValue.class, () -> deposit.deposit(clientId, new BigDecimal("2001")));
   }
 
   @Test
