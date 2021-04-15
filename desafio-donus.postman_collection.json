@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2206fcdc-dedf-45bd-b358-58a29554b227",
+		"_postman_id": "f6fee0a2-e4cf-475e-9884-fe5f32755dad",
 		"name": "desafio-donus",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -91,17 +91,43 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/client/97231193072",
+					"raw": "{{host}}/client/567.594.690-03",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"client",
-						"97231193072"
+						"567.594.690-03"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:8090"
 		}
 	]
 }
