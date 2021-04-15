@@ -75,6 +75,12 @@ no [Postman](https://www.postman.com/) para executar as operações da API REST.
 - Method: POST
 - Body: `{ "from": <string>, "to": <string>, "value": <string> }`
 
+### /client/{id}
+
+- Descrição: Buscar um cliente pelo ID
+- Method: GET
+- Path variable: id - string
+
 ### /client/deposit
 
 - Descrição: Deposita um valor na conta de um cliente registrado.

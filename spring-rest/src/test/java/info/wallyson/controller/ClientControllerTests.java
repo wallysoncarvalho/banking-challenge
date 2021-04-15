@@ -5,12 +5,10 @@ import info.wallyson.domain.CPF;
 import info.wallyson.domain.Client;
 import info.wallyson.ports.ClientRepository;
 import info.wallyson.rest.controller.ClientController;
-import info.wallyson.usecases.Transfer;
 import info.wallyson.util.RequestDataCreator;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,13 +16,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = TestConfig.class)
@@ -38,7 +40,7 @@ class ClientControllerTests {
   @Test
   @DisplayName("Should register client")
   void shouldRequesClientRegister() throws Exception {
-    var client = RequestDataCreator.client();
+    var client = RequestDataCreator.clientRequest();
 
     this.mockMvc
         .perform(
@@ -78,7 +80,8 @@ class ClientControllerTests {
     var receiver = new Client(new CPF(transfer.getTo()), "", BigDecimal.ZERO);
 
     when(clientRepository.findById(sender.getIdentifier().getId())).thenReturn(Optional.of(sender));
-    when(clientRepository.findById(receiver.getIdentifier().getId())).thenReturn(Optional.of(receiver));
+    when(clientRepository.findById(receiver.getIdentifier().getId()))
+        .thenReturn(Optional.of(receiver));
 
     this.mockMvc
         .perform(
@@ -88,5 +91,21 @@ class ClientControllerTests {
                 .content(mapper.writeValueAsString(transfer)))
         .andDo(print())
         .andExpect(status().isOk());
+  }
+
+  @Test
+  @DisplayName("Should request client by the id")
+  void shouldRequestClientById() throws Exception {
+    var client = RequestDataCreator.client();
+
+    when(clientRepository.findById(client.getIdentifier().getId())).thenReturn(Optional.of(client));
+
+    this.mockMvc
+        .perform(get("/client/{id}", client.getIdentifier().getId()))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.cpf").value(client.getIdentifier().getId()))
+        .andExpect(jsonPath("$.balance").exists())
+        .andExpect(jsonPath("$.fullName").value(client.getFullName()))
+        .andDo(print());
   }
 }
