@@ -27,8 +27,6 @@ Por favor, não esquecer de adicionar no README as instruções de como executar
 O projeto foi desenvolvido em Java 11 utilizando as ferramentas da stack [Spring](https://spring.io/) para criação do
 servidor http e tratar das operações de persistência.
 
-Pela simplicidade do projeto foi utilizado o banco de dados "in memory" H2.
-
 Para testes, foram utilizados o Junit 5 (Jupiter), Mockito e o `spring-boot-starter-test`, este último foi necessário
 para escrever os testes da camada WEB.
 
@@ -40,6 +38,16 @@ O projeto pode ser facilmente executado utilizando o docker, mais especificament
 docker build --tag desafio-wallyson .
 
 docker run --name dd-wallyson -p 8090:8090 desafio-wallyson
+```
+
+Isso deverá servir a aplicação no endereço local `http://localhost:8090/`.
+
+Pela simplicidade do projeto foi utilizado o banco de dados "in memory" H2. Para acessar visite o
+_endpoint_ `/h2-console` e insira as informações abaixo na tela do console:
+
+```
+JDBC URL: jdbc:h2:mem:donus
+Password: password
 ```
 
 ## Estrutura do projeto
