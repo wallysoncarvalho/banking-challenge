@@ -37,13 +37,16 @@ O projeto pode ser facilmente executado utilizando o docker, mais especificament
 ```
 docker build --tag desafio-wallyson .
 
-docker run --name dd-wallyson -p 8090:8090 desafio-wallyson
+docker run --name dd-wallyson -p 8090:8090 -p 8091:8091 desafio-wallyson
 ```
+
+ou apenas `make up`, se disponível.
 
 Isso deverá servir a aplicação no endereço local `http://localhost:8090/`.
 
-Pela simplicidade do projeto foi utilizado o banco de dados "in memory" H2. Para acessar visite o
-_endpoint_ `/h2-console` e insira as informações abaixo na tela do console:
+Pela simplicidade do projeto foi utilizado o banco de dados "in memory" H2. O console do H2 deverá estar disponível no
+endereço local `http://localhost:8091/` , bastando apenas inserir as informações abaixo na tela do console para acesso
+ao banco:
 
 ```
 JDBC URL: jdbc:h2:mem:donus
