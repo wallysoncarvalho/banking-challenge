@@ -90,12 +90,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.6</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/info/wallyson/rest/config/H2Config.class</exclude>
-                        <exclude>**/info/wallyson/rest/RestApp.class</exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <!-- to avoid bugs in some situations -->
                     <execution>

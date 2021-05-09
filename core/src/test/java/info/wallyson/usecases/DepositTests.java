@@ -37,7 +37,8 @@ final class DepositTests extends TestBaseClass {
     var client = ClientCreator.single();
     var clientId = client.getIdentifier().getId();
 
-    assertThrows(InvalidDepositValue.class, () -> deposit.deposit(clientId, new BigDecimal("2001")));
+    assertThrows(
+        InvalidDepositValue.class, () -> deposit.deposit(clientId, new BigDecimal("2001")));
   }
 
   @Test
