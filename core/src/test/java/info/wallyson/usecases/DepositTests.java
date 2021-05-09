@@ -2,14 +2,10 @@ package info.wallyson.usecases;
 
 import info.wallyson.exception.ClientNotFoundException;
 import info.wallyson.exception.InvalidDepositValue;
-import info.wallyson.ports.ClientRepository;
 import info.wallyson.util.ClientCreator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.util.Optional;

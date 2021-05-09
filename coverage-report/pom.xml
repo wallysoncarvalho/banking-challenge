@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>covarage</artifactId>
+    <artifactId>coverage-report</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -55,3 +55,4 @@
     </build>
 
 </project>
+

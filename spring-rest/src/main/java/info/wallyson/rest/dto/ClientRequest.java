@@ -6,7 +6,6 @@ import info.wallyson.domain.CPF;
 import info.wallyson.domain.Client;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class ClientRequest {
   private final String cpf;
