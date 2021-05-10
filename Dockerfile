@@ -3,6 +3,7 @@ WORKDIR /application
 COPY core ./core
 COPY persistence ./persistence
 COPY spring-rest ./spring-rest
+COPY coverage-report ./coverage-report
 COPY pom.xml ./
 RUN mvn clean package -DskipTests=true
 RUN java -Djarmode=layertools -jar spring-rest/target/spring-rest-1.0.jar extract
