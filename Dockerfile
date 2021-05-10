@@ -9,6 +9,7 @@ WORKDIR /application
 COPY spring-rest/target/spring-rest-1.0.jar ./app.jar
 # RUN java -Djarmode=layertools -jar spring-rest/target/spring-rest-1.0.jar extract
 RUN java -Djarmode=layertools -jar app.jar extract
+RUN ls
 
 FROM adoptopenjdk:11-jre-hotspot
 LABEL org.opencontainers.image.source="https://github.com/wallysoncarvalho/desafio-donus"
