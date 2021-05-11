@@ -1,16 +1,11 @@
 FROM adoptopenjdk/maven-openjdk11 as builder
 WORKDIR /application
-# COPY core ./core
-# COPY persistence ./persistence
-# COPY spring-rest ./spring-rest
-# COPY coverage-report ./coverage-report
-# COPY pom.xml ./
-# RUN mvn clean package -DskipTests=true
 COPY spring-rest/target/spring-rest-1.0.jar ./app.jar
-# RUN java -Djarmode=layertools -jar spring-rest/target/spring-rest-1.0.jar extract
 RUN java -Djarmode=layertools -jar app.jar extract
 
+# "RUN true" set to resolve copy issue on github actions
 FROM adoptopenjdk:11-jre-hotspot
+# label set to image to appear on the repository package section
 LABEL org.opencontainers.image.source="https://github.com/wallysoncarvalho/desafio-donus"
 WORKDIR /application
 COPY --from=builder application/dependencies/ ./
