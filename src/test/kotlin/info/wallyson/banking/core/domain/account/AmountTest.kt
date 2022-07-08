@@ -1,11 +1,11 @@
 package info.wallyson.banking.core.domain.account
 
-import info.wallyson.banking.core.domain.transaction.Amount
+import info.wallyson.banking.domain.transaction.Amount
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import java.lang.Exception
+import java.util.UUID
 
 internal class AmountTest {
 
@@ -19,6 +19,7 @@ internal class AmountTest {
     fun `should create amount with positive and negative longs`(value: Long) {
         Amount(value = value)
     }
+
 
 
 

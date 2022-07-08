@@ -1,0 +1,137 @@
+info:
+  application:
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+
+server:
+  port: 8080
+  shutdown: graceful
+  forward-headers-strategy: framework
+  error:
+    whitelabel:
+      enabled: false
+
+spring:
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+
+  main:
+    banner-mode: off
+
+  application:
+    name: banking-challenge
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/banking_challenge}
+    username: ${SPRING_DATASOURCE_USERNAME:banking_challenge}
+    password: ${SPRING_DATASOURCE_PASSWORD:banking_challenge}
+    hikari:
+      pool-name: BC-connection-pool
+      maximum-pool-size: 10
+
+  cloud:
+    discovery:
+      client:
+        composite-indicator:
+          enabled: false
+
+  web:
+    resources:
+      add-mappings: false
+
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+  flyway:
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    schemas: public
+    default-schema: public
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    open-in-view: false
+
+  kafka:
+    security:
+      protocol: ${KAFKA_SECURITY_PROTOCOL:PLAINTEXT}
+    ssl:
+      trust-store-location: ${KAFKA_TRUSTSTORE_LOCATION}
+      trust-store-password: ${KAFKA_TRUSTSTORE_PASSWORD}
+      key-store-location: ${KAFKA_KEYSTORE_LOCATION}
+      key-store-password: ${KAFKA_KEYSTORE_PASSWORD}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:29091}
+    listener:
+      concurrency: 4
+      ack-mode: manual_immediate
+      type: single
+    consumer:
+      group-id: account-closure
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: false
+      max-poll-records: 5
+      properties:
+        max.poll.interval.ms: 3600000
+        max.poll.records: 5
+        session.timeout.ms: 60000
+        heartbeat.interval.ms: 3000
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 5
+
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "health"
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+      newrelic:
+        enabled: true
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  server:
+    port: 8081
+
+logging:
+  level:
+    org:
+      springframework:
+        web: ${LOG_LEVEL:DEBUG}
+        kafka: WARN
+        jdbc:
+          core: ${JDBC_LOG_LEVEL:ERROR}
+        data.convert.CustomConversions: ERROR
+      apache:
+        kafka: ${KAFKA_LOG_LEVEL:ERROR}
+    com:
+      wallyson:
+        banking: ${LOG_LEVEL:DEBUG}
+
+
+springdoc:
+  swagger-ui:
+    disable-swagger-default-url: true
+    url: "/v3/api-docs"
+    default-models-expand-depth: -1
