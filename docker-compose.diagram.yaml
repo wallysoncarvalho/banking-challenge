@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  diagram:
+    image: schemacrawler/schemacrawler:v16.15.7
+    hostname: diagram
+    command: ["bash", "/share/diagram.sh"]
+    volumes:
+      - ./docs/:/share

@@ -1,11 +1,16 @@
-IMAGE_TAG := desafio-wallyson
-CONTAINER_NAME := dd-wallyson
+.PHONY: build
+
+COMPOSE=./docker-compose.yaml
+COMPOSE_DIAGRAM=./docker-compose.diagram.yaml
 
 up:
-	docker build --tag desafio-wallyson .
-	docker run --name $(CONTAINER_NAME) -p 8090:8090 -p 8091:8091 $(IMAGE_TAG)
+	docker compose -f $(COMPOSE) up -d
 
 down:
-	docker stop $(CONTAINER_NAME)
-	docker rm $(CONTAINER_NAME)
-	docker image rm $(IMAGE_TAG)
+	docker compose -f $(COMPOSE) down -v --remove-orphans
+
+db/migrate:
+	./gradlew flywayMigrate
+
+db/diagram:
+	docker compose -f $(COMPOSE) -f $(COMPOSE_DIAGRAM) run --rm diagram
